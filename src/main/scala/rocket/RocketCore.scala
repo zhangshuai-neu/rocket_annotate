@@ -1,19 +1,27 @@
 // See LICENSE.Berkeley for license details.
 // See LICENSE.SiFive for license details.
 
+// 当前目录打包成 freechips.rocketchip.rocket
+// src/main/scala/目录就是 freechips.rocketchip
 package freechips.rocketchip.rocket
 
+// chisel的库
 import Chisel._
 import Chisel.ImplicitConversions._
 import chisel3.experimental._
+
+// 从src/main/scala/导入包
 import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.tile._
 import freechips.rocketchip.util._
 import freechips.rocketchip.util.property._
 import freechips.rocketchip.scie._
+
+// scala本身的包
 import scala.collection.immutable.ListMap
 import scala.collection.mutable.ArrayBuffer
 
+//case 类 rock核心的参数，参数都是val
 case class RocketCoreParams(
   bootFreqHz: BigInt = 0,
   useVM: Boolean = true,
@@ -52,6 +60,7 @@ case class RocketCoreParams(
   val lrscCycles: Int = 80 // worst case is 14 mispredicted branches + slop
   override def customCSRs(implicit p: Parameters) = new RocketCustomCSRs
 }
+
 
 trait HasRocketCoreParameters extends HasCoreParameters {
   lazy val rocketParams: RocketCoreParams = tileParams.core.asInstanceOf[RocketCoreParams]
