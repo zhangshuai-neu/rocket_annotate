@@ -74,6 +74,7 @@ trait HasRocketCoreParameters extends HasCoreParameters {
 }
 
 class RocketCustomCSRs(implicit p: Parameters) extends CustomCSRs with HasRocketCoreParameters {
+  //bpmCSR代表的是分支预测模式寄存器
   override def bpmCSR = {
     rocketParams.branchPredictionModeCSR.option(CustomCSR(bpmCSRId, BigInt(1), Some(BigInt(0))))
   }
@@ -87,6 +88,7 @@ class RocketCustomCSRs(implicit p: Parameters) extends CustomCSRs with HasRocket
     Some(CustomCSR(chickenCSRId, mask, Some(mask)))
   }
 
+  //下面定义了3个CustomCSR
   def marchid = CustomCSR.constant(CSRs.marchid, BigInt(1))
 
   def mvendorid = CustomCSR.constant(CSRs.mvendorid, BigInt(rocketParams.mvendorid))
@@ -95,6 +97,7 @@ class RocketCustomCSRs(implicit p: Parameters) extends CustomCSRs with HasRocket
   // Past releases: <none>
   def mimpid = CustomCSR.constant(CSRs.mimpid, BigInt(0x20181004))
 
+  //在父类CustomCSR中又添加了上述的三个CustomCSR
   override def decls = super.decls :+ marchid :+ mvendorid :+ mimpid
 }
 
@@ -115,6 +118,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   @chiselName class RocketImpl { // entering gated-clock domain
 
   // performance counters
+  // 在!ctrl_killd, ex_pc_valid, mem_pc_valid同时满足的条件下, 才会发生x <= x
   def pipelineIDToWB[T <: Data](x: T): T =
     RegEnable(RegEnable(RegEnable(x, !ctrl_killd), ex_pc_valid), mem_pc_valid)
   val perfEvents = new EventSets(Seq(
@@ -232,14 +236,20 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val take_pc = take_pc_mem_wb
 
   // decode stage
+  //这里的ibuf是IBuf类的对象，详见IBuf.scala
+  //其中对ibuf的io的访问要注意，这里inst是个vec，同时其对象是Instruction类
+  //_.bits指的是Decoupled中的参数类型，在这里指的是Instruction实例化出来的对象
+  //即_.bits是个Instruction对象，而_.bits.inst是Instruction中的成员
   val ibuf = Module(new IBuf)
-  val id_expanded_inst = ibuf.io.inst.map(_.bits.inst)
-  val id_raw_inst = ibuf.io.inst.map(_.bits.raw)
+  val id_expanded_inst = ibuf.io.inst.map(_.bits.inst)  //指令的结构,包括了rs3,rs2,rs1,rd,对应的是RVC.scala中的ExpandedInstruction
+  val id_raw_inst = ibuf.io.inst.map(_.bits.raw)        //指令
   val id_inst = id_expanded_inst.map(_.bits)
-  ibuf.io.imem <> io.imem.resp
+  ibuf.io.imem <> io.imem.resp  //io.imem.resp中的io指的是Core.scala中借口HasCoreIO的io;其中imem是FrontendResp类型的，详见Frontend.scala
   ibuf.io.kill := take_pc
 
   require(decodeWidth == 1 /* TODO */ && retireWidth == decodeWidth)
+  //IntCtrlSigs的定义位于IDecode.scala中,根据decode_table完成对第一条指令的分析操作,详见decode方法
+  //Wire的类型取决于第一个参数,所以id_ctrl为IntCtrlSigs类型
   val id_ctrl = Wire(new IntCtrlSigs()).decode(id_inst(0), decode_table)
   val id_raddr3 = id_expanded_inst(0).rs3
   val id_raddr2 = id_expanded_inst(0).rs2
@@ -247,13 +257,14 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val id_waddr  = id_expanded_inst(0).rd
   val id_load_use = Wire(Bool())
   val id_reg_fence = Reg(init=Bool(false))
-  val id_ren = IndexedSeq(id_ctrl.rxs1, id_ctrl.rxs2)
+  val id_ren = IndexedSeq(id_ctrl.rxs1, id_ctrl.rxs2) //IndexedSeq就是一个集合
   val id_raddr = IndexedSeq(id_raddr1, id_raddr2)
-  val rf = new RegFile(31, xLen)
-  val id_rs = id_raddr.map(rf.read _)
+  val rf = new RegFile(31, xLen)  //寄存器堆
+  val id_rs = id_raddr.map(rf.read _) //将rs1和rs2寄存器中的内容读出来
   val ctrl_killd = Wire(Bool())
   val id_npc = (ibuf.io.pc.asSInt + ImmGen(IMM_UJ, id_inst(0))).asUInt
 
+  //CSR相关模块
   val csr = Module(new CSRFile(perfEvents, coreParams.customCSRs.decls))
   val id_csr_en = id_ctrl.csr.isOneOf(CSR.S, CSR.C, CSR.W)
   val id_system_insn = id_ctrl.csr === CSR.I
@@ -319,28 +330,30 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   )
   coverExceptions(id_xcpt, id_cause, "DECODE", idCoverCauses)
 
+  //检查是否需要直接从data cache中取需要用到的data
   val dcache_bypass_data =
     if (fastLoadByte) io.dmem.resp.bits.data(xLen-1, 0)
     else if (fastLoadWord) io.dmem.resp.bits.data_word_bypass(xLen-1, 0)
     else wb_reg_wdata
 
   // detect bypass opportunities
+  //检查是否需要register转发
   val ex_waddr = ex_reg_inst(11,7)
   val mem_waddr = mem_reg_inst(11,7)
   val wb_waddr = wb_reg_inst(11,7)
   val bypass_sources = IndexedSeq(
     (Bool(true), UInt(0), UInt(0)), // treat reading x0 as a bypass
-    (ex_reg_valid && ex_ctrl.wxd, ex_waddr, mem_reg_wdata),
-    (mem_reg_valid && mem_ctrl.wxd && !mem_ctrl.mem, mem_waddr, wb_reg_wdata),
-    (mem_reg_valid && mem_ctrl.wxd, mem_waddr, dcache_bypass_data))
-  val id_bypass_src = id_raddr.map(raddr => bypass_sources.map(s => s._1 && s._2 === raddr))
-
+    (ex_reg_valid && ex_ctrl.wxd, ex_waddr, mem_reg_wdata), //将EX stage的数据转发到ID stage
+    (mem_reg_valid && mem_ctrl.wxd && !mem_ctrl.mem, mem_waddr, wb_reg_wdata), //将MEM stage的数据转发到ID stage
+    (mem_reg_valid && mem_ctrl.wxd, mem_waddr, dcache_bypass_data)) //将WB stage的数据转发到ID stage
+  val id_bypass_src = id_raddr.map(raddr => bypass_sources.map(s => s._1 && s._2 === raddr))  //s._1用来访问元组中的元素(下标从1开始),bypass_sources是由多个元组构成的
+                                                                                              //ID与EX,MEM,WB中正在进行操作的寄存器是相同的,同时各stage是有效的
   // execute stage
-  val bypass_mux = bypass_sources.map(_._3)
-  val ex_reg_rs_bypass = Reg(Vec(id_raddr.size, Bool()))
-  val ex_reg_rs_lsb = Reg(Vec(id_raddr.size, UInt(width = log2Ceil(bypass_sources.size))))
+  val bypass_mux = bypass_sources.map(_._3) //记录了所有可能转发给ID stage的数据,在EX stage可能会用到这些数据
+  val ex_reg_rs_bypass = Reg(Vec(id_raddr.size, Bool()))  //用来判断是否发生了bypass
+  val ex_reg_rs_lsb = Reg(Vec(id_raddr.size, UInt(width = log2Ceil(bypass_sources.size))))  //bypass_sources中有4个条目,所以该值为2
   val ex_reg_rs_msb = Reg(Vec(id_raddr.size, UInt()))
-  val ex_rs = for (i <- 0 until id_raddr.size)
+  val ex_rs = for (i <- 0 until id_raddr.size)  //判断是否存在bypass,如果存在则将发送到ID stage的数据存放到该变量中
     yield Mux(ex_reg_rs_bypass(i), bypass_mux(ex_reg_rs_lsb(i)), Cat(ex_reg_rs_msb(i), ex_reg_rs_lsb(i)))
   val ex_imm = ImmGen(ex_ctrl.sel_imm, ex_reg_inst)
   val ex_op1 = MuxLookup(ex_ctrl.sel_alu1, SInt(0), Seq(
@@ -351,6 +364,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     A2_IMM -> ex_imm,
     A2_SIZE -> Mux(ex_reg_rvc, SInt(2), SInt(4))))
 
+  //在EX stage将相关的信息发送到ALU部件中进行运算
   val alu = Module(new ALU)
   alu.io.dw := ex_ctrl.alu_dw
   alu.io.fn := ex_ctrl.alu_fn

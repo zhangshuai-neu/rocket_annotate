@@ -13,7 +13,7 @@ class Instruction(implicit val p: Parameters) extends ParameterizedBundle with H
   val xcpt1 = new FrontendExceptions // exceptions on second half of instruction
   val replay = Bool()
   val rvc = Bool()
-  val inst = new ExpandedInstruction
+  val inst = new ExpandedInstruction  //详见RVC.scala
   val raw = UInt(width = 32)
   require(coreInstBits == (if (usingCompressed) 16 else 32))
 }

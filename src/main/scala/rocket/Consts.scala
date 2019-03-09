@@ -6,29 +6,32 @@ import Chisel._
 import freechips.rocketchip.util._
 import scala.math._
 
+//def xxx = UInt(x, y)
+//其中x为要声明的数值，而y为UInt的位数
+
 trait ScalarOpConstants {
   val MT_SZ = 3
   def MT_X  = BitPat("b???")
-  def MT_B  = UInt("b000")
-  def MT_H  = UInt("b001")
-  def MT_W  = UInt("b010")
-  def MT_D  = UInt("b011")
-  def MT_BU = UInt("b100")
-  def MT_HU = UInt("b101")
-  def MT_WU = UInt("b110")
+  def MT_B  = UInt("b000")  //LB,SB
+  def MT_H  = UInt("b001")  //LH,SH
+  def MT_W  = UInt("b010")  //LW,SW
+  def MT_D  = UInt("b011")  //LD,SD,64bit
+  def MT_BU = UInt("b100")  //LBU
+  def MT_HU = UInt("b101")  //LHU
+  def MT_WU = UInt("b110")  //LWU
   def mtSize(mt: UInt) = mt(MT_SZ-2, 0)
   def mtSigned(mt: UInt) = !mt(MT_SZ-1)
 
   val SZ_BR = 3
   def BR_X    = BitPat("b???")
-  def BR_EQ   = UInt(0, 3)
-  def BR_NE   = UInt(1, 3)
+  def BR_EQ   = UInt(0, 3)  //BEQ
+  def BR_NE   = UInt(1, 3)  //BNE
   def BR_J    = UInt(2, 3)
   def BR_N    = UInt(3, 3)
-  def BR_LT   = UInt(4, 3)
-  def BR_GE   = UInt(5, 3)
-  def BR_LTU  = UInt(6, 3)
-  def BR_GEU  = UInt(7, 3)
+  def BR_LT   = UInt(4, 3)  //BLT
+  def BR_GE   = UInt(5, 3)  //BGE
+  def BR_LTU  = UInt(6, 3)  //BLTU
+  def BR_GEU  = UInt(7, 3)  //BGEU
 
   def A1_X    = BitPat("b??")
   def A1_ZERO = UInt(0, 2)

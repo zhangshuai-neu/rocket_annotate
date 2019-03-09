@@ -41,13 +41,53 @@ object DecodeLogic
       }
     }).reverse)
   }
+  /*
+    import scala.collection.{Iterable, Seq}
+    import scala.collection.mutable.ArrayBuffer
+
+    object Test {
+
+      def main(args: Array[String]): Unit = {
+        val s1 = Seq[Int](1,2,3)
+        val s2 = Seq[Int](7,8,9)
+        val s3 = Seq[Int](10,11,12)
+        val y = Iterable[(Int, Seq[Int])]((4,s1), (8,s2))
+        val mapping = ArrayBuffer.fill(10)(ArrayBuffer[(Int, Int)]())
+
+        for((key, values) <- y)
+          for((value, i) <- values zipWithIndex) {
+            mapping(i) += key -> value
+            //println(key, value)
+          }
+
+        for(value <- mapping)
+          println(value)
+
+        for ((thisDefault, thisMapping) <- s3 zip mapping) {
+          println(thisDefault, thisMapping)
+        }
+
+      }
+    }
+
+    打印结果
+    ArrayBuffer((4,1), (8,7))
+    ArrayBuffer((4,2), (8,8))
+    ArrayBuffer((4,3), (8,9))
+
+    (10,ArrayBuffer((4,1), (8,7)))
+    (11,ArrayBuffer((4,2), (8,8)))
+    (12,ArrayBuffer((4,3), (8,9)))
+  * */
   def apply(addr: UInt, default: Seq[BitPat], mappingIn: Iterable[(BitPat, Seq[BitPat])]): Seq[UInt] = {
-    val mapping = ArrayBuffer.fill(default.size)(ArrayBuffer[(BitPat, BitPat)]())
-    for ((key, values) <- mappingIn)
-      for ((value, i) <- values zipWithIndex)
+    val mapping = ArrayBuffer.fill(default.size)(ArrayBuffer[(BitPat, BitPat)]()) //fill()()方法用来填充数组
+    //经过这个双层for循环,完成了对mappingIn的映射,将(BitPat, Seq[BitPat])映射成为(BitPat, BitPat),存放在mapping中
+    for ((key, values) <- mappingIn)  //每个values相当于一个数组
+      for ((value, i) <- values zipWithIndex) //zipWithIndex方法用来自动地创建一个计数器,相当于给每个元素加上序号
         mapping(i) += key -> value
-    for ((thisDefault, thisMapping) <- default zip mapping)
-      yield apply(addr, thisDefault, thisMapping)
+
+    for ((thisDefault, thisMapping) <- default zip mapping) //zip 完成了对两个集合合并,合并的方法是根据序号相对应的方法合并
+      yield apply(addr, thisDefault, thisMapping) //thisDefault的类型为BitPat,而thisMapping为ArrayBuffer[(BitPat, BitPat)]
   }
   def apply(addr: UInt, default: Seq[BitPat], mappingIn: List[(UInt, Seq[BitPat])]): Seq[UInt] =
     apply(addr, default, mappingIn.map(m => (BitPat(m._1), m._2)).asInstanceOf[Iterable[(BitPat, Seq[BitPat])]])

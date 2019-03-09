@@ -48,6 +48,7 @@ class IntCtrlSigs extends Bundle {
   val amo = Bool()
   val dp = Bool()
 
+  //BitPat定义于BitPat.scala,用来表示bit pattern,忽略无关位的匹配
   def default: List[BitPat] =
                 //           jal                                                                   renf1               fence.i
                 //   val     | jalr                                                                | renf2             |
@@ -64,7 +65,7 @@ class IntCtrlSigs extends Bundle {
     val sigs = Seq(legal, fp, rocc, branch, jal, jalr, rxs2, rxs1, scie, sel_alu2,
                    sel_alu1, sel_imm, alu_dw, alu_fn, mem, mem_cmd, mem_type,
                    rfs1, rfs2, rfs3, wfd, mul, div, wxd, csr, fence_i, fence, amo, dp)
-    sigs zip decoder map {case(s,d) => s := d}
+    sigs zip decoder map {case(s,d) => s := d}  //zip关键字将两个集合合并为一个集合
     this
   }
 }

@@ -81,7 +81,7 @@ object BitPat {
 
 /** Bit patterns are literals with masks, used to represent values with don't
   * care bits. Equality comparisons will ignore don't care bits.
-  *
+  * 位模式是带有掩码的文字值，用于表示具有无关位的值。 相等比较将忽略无关位。
   * @example {{{
   * "b10101".U === BitPat("b101??") // evaluates to true.B
   * "b10111".U === BitPat("b101??") // evaluates to true.B
