@@ -49,8 +49,8 @@ import Instructions._
 
 class ALU(implicit p: Parameters) extends CoreModule()(p) {
   val io = new Bundle {
-    val dw = Bits(INPUT, SZ_DW)
-    val fn = Bits(INPUT, SZ_ALU_FN)
+    val dw = Bits(INPUT, SZ_DW)     //Data width, 数据宽度,当为true.B时64bit,反之则是32位
+    val fn = Bits(INPUT, SZ_ALU_FN) //功能码,对应不同的功能
     val in2 = UInt(INPUT, xLen)
     val in1 = UInt(INPUT, xLen)
     val out = UInt(OUTPUT, xLen)

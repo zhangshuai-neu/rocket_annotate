@@ -24,7 +24,7 @@ class IBuf(implicit p: Parameters) extends CoreModule {
     val kill = Bool(INPUT)
     val pc = UInt(OUTPUT, vaddrBitsExtended)
     val btb_resp = new BTBResp().asOutput
-    val inst = Vec(retireWidth, Decoupled(new Instruction))
+    val inst = Vec(retireWidth, Decoupled(new Instruction)) //指令槽里面最多有几条指令,这里默认的是1. Instruction详见Instructions.scala
   }
 
   // This module is meant to be more general, but it's not there yet

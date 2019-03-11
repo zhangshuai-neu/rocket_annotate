@@ -49,6 +49,7 @@ class IntCtrlSigs extends Bundle {
   val dp = Bool()
 
   //BitPat定义于BitPat.scala,用来表示bit pattern,忽略无关位的匹配
+  //default是decode_table中的默认值
   def default: List[BitPat] =
                 //           jal                                                                   renf1               fence.i
                 //   val     | jalr                                                                | renf2             |
@@ -61,15 +62,16 @@ class IntCtrlSigs extends Bundle {
                 List(N,X,X,X,X,X,X,X,X,A2_X,   A1_X,   IMM_X, DW_X,  FN_X,     N,M_X,        MT_X, X,X,X,X,X,X,X,CSR.X,X,X,X,X)
 
   def decode(inst: UInt, table: Iterable[(BitPat, List[BitPat])]) = {
-    val decoder = DecodeLogic(inst, default, table)
+    val decoder = DecodeLogic(inst, default, table) //decoder是个Seq[UInt]类型的数据
     val sigs = Seq(legal, fp, rocc, branch, jal, jalr, rxs2, rxs1, scie, sel_alu2,
                    sel_alu1, sel_imm, alu_dw, alu_fn, mem, mem_cmd, mem_type,
                    rfs1, rfs2, rfs3, wfd, mul, div, wxd, csr, fence_i, fence, amo, dp)
-    sigs zip decoder map {case(s,d) => s := d}  //zip关键字将两个集合合并为一个集合
+    sigs zip decoder map {case(s,d) => s := d}  //zip关键字将两个集合合并为一个集合,上述的各位被赋值为1或0
     this
   }
 }
 
+//RV32I
 class IDecode(implicit val p: Parameters) extends DecodeConstants
 {
   val table: Array[(BitPat, List[BitPat])] = Array(
@@ -126,6 +128,7 @@ class IDecode(implicit val p: Parameters) extends DecodeConstants
     CSRRCI->    List(Y,N,N,N,N,N,N,N,N,A2_IMM, A1_ZERO,IMM_Z, DW_XPR,FN_ADD,   N,M_X,        MT_X, N,N,N,N,N,N,Y,CSR.C,N,N,N,N))
 }
 
+//RV32I->FENCE.I
 class FenceIDecode(flushDCache: Boolean)(implicit val p: Parameters) extends DecodeConstants
 {
   private val (v, cmd) = if (flushDCache) (Y, BitPat(M_FLUSH_ALL)) else (N, M_X)
@@ -134,6 +137,7 @@ class FenceIDecode(flushDCache: Boolean)(implicit val p: Parameters) extends Dec
     FENCE_I->   List(Y,N,N,N,N,N,N,N,N,A2_X,   A1_X,   IMM_X, DW_X,  FN_X,     v,cmd,        MT_X, N,N,N,N,N,N,N,CSR.N,Y,Y,N,N))
 }
 
+//冲刷Data Cache
 class CFlushDecode(implicit val p: Parameters) extends DecodeConstants
 {
   val table: Array[(BitPat, List[BitPat])] = Array(
@@ -154,6 +158,7 @@ class DebugDecode(implicit val p: Parameters) extends DecodeConstants
     DRET->      List(Y,N,N,N,N,N,N,X,N,A2_X,   A1_X,   IMM_X, DW_X,  FN_X,     N,M_X,        MT_X, N,N,N,N,N,N,N,CSR.I,N,N,N,N))
 }
 
+//RV32I->SLLI,SRLI,SRAI
 class I32Decode(implicit val p: Parameters) extends DecodeConstants
 {
   val table: Array[(BitPat, List[BitPat])] = Array(
@@ -162,6 +167,7 @@ class I32Decode(implicit val p: Parameters) extends DecodeConstants
     SRAI_RV32-> List(Y,N,N,N,N,N,N,Y,N,A2_IMM, A1_RS1, IMM_I, DW_XPR,FN_SRA,   N,M_X,        MT_X, N,N,N,N,N,N,Y,CSR.N,N,N,N,N))
 }
 
+//RV64I
 class I64Decode(implicit val p: Parameters) extends DecodeConstants
 {
   val table: Array[(BitPat, List[BitPat])] = Array(
@@ -184,6 +190,7 @@ class I64Decode(implicit val p: Parameters) extends DecodeConstants
     SRAW->      List(Y,N,N,N,N,N,Y,Y,N,A2_RS2, A1_RS1, IMM_X, DW_32,FN_SRA,    N,M_X,        MT_X, N,N,N,N,N,N,Y,CSR.N,N,N,N,N))
 }
 
+//RV32M
 class MDecode(pipelinedMul: Boolean)(implicit val p: Parameters) extends DecodeConstants
 {
   val M = if (pipelinedMul) Y else N
@@ -200,6 +207,7 @@ class MDecode(pipelinedMul: Boolean)(implicit val p: Parameters) extends DecodeC
     REMU->      List(Y,N,N,N,N,N,Y,Y,N,A2_RS2, A1_RS1, IMM_X, DW_XPR,FN_REMU,  N,M_X,        MT_X, N,N,N,N,N,Y,Y,CSR.N,N,N,N,N))
 }
 
+//RV64M
 class M64Decode(pipelinedMul: Boolean)(implicit val p: Parameters) extends DecodeConstants
 {
   val M = if (pipelinedMul) Y else N
@@ -213,6 +221,7 @@ class M64Decode(pipelinedMul: Boolean)(implicit val p: Parameters) extends Decod
     REMUW->     List(Y,N,N,N,N,N,Y,Y,N,A2_RS2, A1_RS1, IMM_X, DW_32, FN_REMU,  N,M_X,        MT_X, N,N,N,N,N,Y,Y,CSR.N,N,N,N,N))
 }
 
+//RV32A
 class ADecode(implicit val p: Parameters) extends DecodeConstants
 {
   val table: Array[(BitPat, List[BitPat])] = Array(

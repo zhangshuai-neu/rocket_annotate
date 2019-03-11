@@ -15,17 +15,19 @@ object DecodeLogic
     }.foldLeft(Bool(false))(_||_)
   }
 	def apply(addr: UInt, default: BitPat, mapping: Iterable[(BitPat, BitPat)]): UInt = {
+    //caches是个Map类型的数据,getOrElseUpdate (k, d),如果ms中存在键k，则返回键k的值。否则向ms中新增映射关系k -> v并返回d
     val cache = caches.getOrElseUpdate(addr, Map[Term,Bool]())
     val dterm = term(default)
-    val (keys, values) = mapping.unzip
+    val (keys, values) = mapping.unzip  //Iterable中的unzip方法用来将元组集合拆分,即Iterable(A,B) => Iterable(A1,A2, ...)和Iterable(B1,B2, ...)
     val addrWidth = keys.map(_.getWidth).max
-    val terms = keys.toList.map(k => term(k))
-    val termvalues = terms zip values.toList.map(term(_))
+    val terms = keys.toList.map(k => term(k)) //将iterable转换成List,该List中是所有指令的助记符,如BNE
+    val termvalues = terms zip values.toList.map(term(_)) //这时候生成了List((BNE,A2_RS2),(BNE,A1_RS1), ...),严格说是Term类型的,不是Bit类型
 
     for (t <- keys.zip(terms).tails; if !t.isEmpty)
       for (u <- t.tail)
         assert(!t.head._2.intersects(u._2), "DecodeLogic: keys " + t.head + " and " + u + " overlap")
 
+    //Cat方法可以将如下字段组合在一起
     Cat((0 until default.getWidth.max(values.map(_.getWidth).max)).map({ case (i: Int) =>
       val mint = termvalues.filter { case (k,t) => ((t.mask >> i) & 1) == 0 && ((t.value >> i) & 1) == 1 }.map(_._1)
       val maxt = termvalues.filter { case (k,t) => ((t.mask >> i) & 1) == 0 && ((t.value >> i) & 1) == 0 }.map(_._1)
@@ -81,13 +83,17 @@ object DecodeLogic
   * */
   def apply(addr: UInt, default: Seq[BitPat], mappingIn: Iterable[(BitPat, Seq[BitPat])]): Seq[UInt] = {
     val mapping = ArrayBuffer.fill(default.size)(ArrayBuffer[(BitPat, BitPat)]()) //fill()()方法用来填充数组
-    //经过这个双层for循环,完成了对mappingIn的映射,将(BitPat, Seq[BitPat])映射成为(BitPat, BitPat),存放在mapping中
+    //经过这个双层for循环,完成了对mappingIn的映射,将(BitPat, Seq[BitPat])映射成为(BitPat, BitPat),存放在mapping中.
+    //BNE->List(Y,N,N,Y,N,N,Y,Y,N,A2_RS2,A1_RS1,IMM_SB,DW_X,FN_SNE,N,M_X,MT_X,N,N,N,N,N,N,N,CSR.N,N,N,N,N)转化为
+    //BNE->A2_RS2
+    //其中第一个BitPat代表的是是指令的助记符,第二个BitPat代表的则是List中的一个属性
     for ((key, values) <- mappingIn)  //每个values相当于一个数组
       for ((value, i) <- values zipWithIndex) //zipWithIndex方法用来自动地创建一个计数器,相当于给每个元素加上序号
         mapping(i) += key -> value
 
     for ((thisDefault, thisMapping) <- default zip mapping) //zip 完成了对两个集合合并,合并的方法是根据序号相对应的方法合并
       yield apply(addr, thisDefault, thisMapping) //thisDefault的类型为BitPat,而thisMapping为ArrayBuffer[(BitPat, BitPat)]
+    //最终会调用上面的apply方法
   }
   def apply(addr: UInt, default: Seq[BitPat], mappingIn: List[(UInt, Seq[BitPat])]): Seq[UInt] =
     apply(addr, default, mappingIn.map(m => (BitPat(m._1), m._2)).asInstanceOf[Iterable[(BitPat, Seq[BitPat])]])

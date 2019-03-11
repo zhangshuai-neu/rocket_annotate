@@ -166,7 +166,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
       ("L2 TLB miss", () => io.ptw.perf.l2miss)))))
 
   val pipelinedMul = usingMulDiv && mulDivParams.mulUnroll == xLen
-  val decode_table = {
+  val decode_table = {  //对所有指令的定义详见IDecode.scala
     require(!usingRoCC || !rocketParams.useSCIE)
     (if (usingMulDiv) new MDecode(pipelinedMul) +: (xLen > 32).option(new M64Decode(pipelinedMul)).toSeq else Nil) ++:
     (if (usingAtomics) new ADecode +: (xLen > 32).option(new A64Decode).toSeq else Nil) ++:
@@ -262,7 +262,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val rf = new RegFile(31, xLen)  //寄存器堆
   val id_rs = id_raddr.map(rf.read _) //将rs1和rs2寄存器中的内容读出来
   val ctrl_killd = Wire(Bool())
-  val id_npc = (ibuf.io.pc.asSInt + ImmGen(IMM_UJ, id_inst(0))).asUInt
+  val id_npc = (ibuf.io.pc.asSInt + ImmGen(IMM_UJ, id_inst(0))).asUInt  //下条指令的PC
 
   //CSR相关模块
   val csr = Module(new CSRFile(perfEvents, coreParams.customCSRs.decls))
@@ -337,7 +337,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     else wb_reg_wdata
 
   // detect bypass opportunities
-  //检查是否需要register转发
+  //检查是否需要register转发,(11,7)对应的是rd寄存器的index
   val ex_waddr = ex_reg_inst(11,7)
   val mem_waddr = mem_reg_inst(11,7)
   val wb_waddr = wb_reg_inst(11,7)
@@ -348,6 +348,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     (mem_reg_valid && mem_ctrl.wxd, mem_waddr, dcache_bypass_data)) //将WB stage的数据转发到ID stage
   val id_bypass_src = id_raddr.map(raddr => bypass_sources.map(s => s._1 && s._2 === raddr))  //s._1用来访问元组中的元素(下标从1开始),bypass_sources是由多个元组构成的
                                                                                               //ID与EX,MEM,WB中正在进行操作的寄存器是相同的,同时各stage是有效的
+                                                                                              //该值记录了发生冲突访问的寄存器Index
   // execute stage
   val bypass_mux = bypass_sources.map(_._3) //记录了所有可能转发给ID stage的数据,在EX stage可能会用到这些数据
   val ex_reg_rs_bypass = Reg(Vec(id_raddr.size, Bool()))  //用来判断是否发生了bypass
@@ -356,6 +357,8 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val ex_rs = for (i <- 0 until id_raddr.size)  //判断是否存在bypass,如果存在则将发送到ID stage的数据存放到该变量中
     yield Mux(ex_reg_rs_bypass(i), bypass_mux(ex_reg_rs_lsb(i)), Cat(ex_reg_rs_msb(i), ex_reg_rs_lsb(i)))
   val ex_imm = ImmGen(ex_ctrl.sel_imm, ex_reg_inst)
+  //MuxLookup用来从Seq中查找某个关键字是否存在,关键字即为第一个参数
+  //ex_op1和ex_op2为当前要执行指令的两个source register,可能用来进行算数逻辑运算,也可能用来计算PC地址(跳转或比较指令)
   val ex_op1 = MuxLookup(ex_ctrl.sel_alu1, SInt(0), Seq(
     A1_RS1 -> ex_rs(0).asSInt,
     A1_PC -> ex_reg_pc.asSInt))
@@ -408,14 +411,14 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     when (id_xcpt) { // pass PC down ALU writeback pipeline for badaddr
       ex_ctrl.alu_fn := ALU.FN_ADD
       ex_ctrl.alu_dw := DW_XPR
-      ex_ctrl.sel_alu1 := A1_RS1 // badaddr := instruction
+      ex_ctrl.sel_alu1 := A1_RS1
       ex_ctrl.sel_alu2 := A2_ZERO
       when (id_xcpt1.asUInt.orR) { // badaddr := PC+2
         ex_ctrl.sel_alu1 := A1_PC
         ex_ctrl.sel_alu2 := A2_SIZE
         ex_reg_rvc := true
       }
-      when (bpu.io.xcpt_if || id_xcpt0.asUInt.orR) { // badaddr := PC
+      when (bpu.io.xcpt_if || id_xcpt0.asUInt.orR) { // badaddr := PCPriorityMux
         ex_ctrl.sel_alu1 := A1_PC
         ex_ctrl.sel_alu2 := A2_ZERO
       }
@@ -427,13 +430,20 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     }
 
     for (i <- 0 until id_raddr.size) {
-      val do_bypass = id_bypass_src(i).reduce(_||_)
+      //reduce方法,使用指定的运算符对所有元素进行运算
+      /*
+      val list = List(1,2,3,4,5)
+      list: List[Int] = List(1, 2, 3, 4, 5)
+      scala> list.reduce(_+_)
+      res0: Int = 15
+      */
+      val do_bypass = id_bypass_src(i).reduce(_||_) //如果所有位都为0,即x0,不需要bypass;除了x0都需要进行bypass
       val bypass_src = PriorityEncoder(id_bypass_src(i))
       ex_reg_rs_bypass(i) := do_bypass
       ex_reg_rs_lsb(i) := bypass_src
       when (id_ren(i) && !do_bypass) {
-        ex_reg_rs_lsb(i) := id_rs(i)(log2Ceil(bypass_sources.size)-1, 0)
-        ex_reg_rs_msb(i) := id_rs(i) >> log2Ceil(bypass_sources.size)
+        ex_reg_rs_lsb(i) := id_rs(i)(log2Ceil(bypass_sources.size)-1, 0)  //对于32bit寄存器的index来说,这是最低两位
+        ex_reg_rs_msb(i) := id_rs(i) >> log2Ceil(bypass_sources.size)     //对于32bit寄存器的index来说,这是最高三位
       }
     }
     when (id_illegal_insn) {
