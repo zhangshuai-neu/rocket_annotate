@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d7550e4e-64dd-4f32-aea5-d8a054d18f0c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/Decode.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/Decode.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" afterDir="false" />
@@ -39,11 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="681">
-              <caret line="505" column="35" lean-forward="true" selection-start-line="505" selection-start-column="35" selection-end-line="505" selection-end-column="35" />
+            <state relative-caret-position="576">
+              <caret line="704" column="56" selection-start-line="704" selection-start-column="56" selection-end-line="704" selection-end-column="56" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -51,11 +49,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+            <state relative-caret-position="380">
+              <caret line="63" column="15" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="15" />
               <folding>
                 <element signature="e#81#96#0" expanded="true" />
               </folding>
@@ -66,7 +64,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
+            <state relative-caret-position="945">
               <caret line="67" column="55" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="55" />
             </state>
           </provider>
@@ -75,65 +73,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+            <state relative-caret-position="390">
+              <caret line="232" column="128" lean-forward="true" selection-start-line="232" selection-start-column="51" selection-end-line="232" selection-end-column="128" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/compatibility.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="523" column="47" lean-forward="true" selection-start-line="523" selection-start-column="47" selection-end-line="523" selection-end-column="47" />
-              <folding>
-                <element signature="e#317#353#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/OneHot.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="44" column="39" lean-forward="true" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/Mux.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="31" column="37" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chisel3/chiselFrontend/src/main/scala/chisel3/core/SeqUtils.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
-              <folding>
-                <element signature="e#59#97#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/chisel3/coreMacros/src/main/scala/chisel3/internal/sourceinfo/SourceInfoTransform.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#182#223#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -150,18 +93,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ex_reg_rs_bypass</find>
-      <find>mem_reg_wdata</find>
-      <find>ex_reg_inst</find>
-      <find>ImmGen</find>
-      <find>IntCtrlSigs</find>
-      <find>ex_ctrl.sel_imm</find>
-      <find>ctrl_killd</find>
-      <find>rvc</find>
-      <find>ex_ctrl</find>
       <find>id_ctrl</find>
       <find>Term</find>
-      <find>id_inst</find>
       <find>MDecode</find>
       <find>decode_table</find>
       <find>Instruction</find>
@@ -174,12 +107,22 @@
       <find>bypass_src</find>
       <find>id_raddr1</find>
       <find>ex_reg_rs_lsb</find>
-      <find>id_raddr</find>
       <find>priorityMux</find>
       <find>id_bypass_src</find>
       <find>bypass_sources</find>
       <find>id_raw_inst</find>
       <find>mem_ctrl</find>
+      <find>take_pc</find>
+      <find>ibuf.io.pc</find>
+      <find>pc</find>
+      <find>nBufValid</find>
+      <find>ex_reg_inst</find>
+      <find>id_inst</find>
+      <find>id_raddr</find>
+      <find>sel_alu2</find>
+      <find>ctrl_killd</find>
+      <find>id_xcpt</find>
+      <find>checkHazards</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main/scala/amba</dir>
@@ -195,10 +138,10 @@
         <option value="$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/BitPat.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/Consts.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/Decode.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" />
         <option value="$PROJECT_DIR$/chisel3/chiselFrontend/src/main/scala/chisel3/core/SeqUtils.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" />
       </list>
     </option>
@@ -211,10 +154,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1855" />
-    <option name="height" value="1084" />
+    <option name="x" value="64" />
+    <option name="y" value="-11" />
+    <option name="width" value="1857" />
+    <option name="height" value="1092" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -239,6 +182,13 @@
               <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
               <item name="chisel3" type="462c0819:PsiDirectoryNode" />
               <item name="chisel3" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
+              <item name="chisel3" type="462c0819:PsiDirectoryNode" />
+              <item name="chisel3" type="462c0819:PsiDirectoryNode" />
+              <item name="internal" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
@@ -301,20 +251,28 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="scie" type="462c0819:PsiDirectoryNode" />
+              <item name="subsystem" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="scala" type="462c0819:PsiDirectoryNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552269661351" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552551758145" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -401,17 +359,23 @@
       <workItem from="1552135158636" duration="384000" />
       <workItem from="1552177464863" duration="6186000" />
       <workItem from="1552215913140" duration="4306000" />
+      <workItem from="1552269829155" duration="1616000" />
+      <workItem from="1552525045035" duration="974000" />
+      <workItem from="1552542401860" duration="751000" />
+      <workItem from="1552543268643" duration="6200000" />
+      <workItem from="1552732841536" duration="702000" />
+      <workItem from="1552894019520" duration="644000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58414000" />
+    <option name="totallyTimeSpent" value="69301000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
+    <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.29408512" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.31509122" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -490,15 +454,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/PTW.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/TLBPermissions.scala">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -507,11 +462,6 @@
         <state relative-caret-position="535">
           <caret line="229" column="15" selection-start-line="229" selection-start-column="15" selection-end-line="229" selection-end-column="15" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Breakpoint.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-385" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/Reg.scala">
@@ -590,11 +540,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scie/SCIE.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-625" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/chiselFrontend/src/main/scala/chisel3/core/Data.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7245">
@@ -647,13 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Consts.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="61" column="6" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/../../rocket-chip/tools/scala-2.12.4/lib/scala-library.jar!/scala/language.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -671,52 +609,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="67" column="55" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RVC.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Instructions.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="875">
-          <caret line="302" column="25" selection-start-line="302" selection-start-column="14" selection-end-line="302" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chisel3/coreMacros/src/main/scala/chisel3/internal/sourceinfo/SourceInfoTransform.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="85" column="3" lean-forward="true" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#182#223#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/compatibility.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="523" column="47" lean-forward="true" selection-start-line="523" selection-start-column="47" selection-end-line="523" selection-end-column="47" />
+        <state relative-caret-position="7725">
+          <caret line="523" column="43" selection-start-line="523" selection-start-column="37" selection-end-line="523" selection-end-column="52" />
           <folding>
             <element signature="e#317#353#0" expanded="true" />
           </folding>
@@ -725,44 +621,171 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/OneHot.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="44" column="39" lean-forward="true" selection-start-line="44" selection-start-column="39" selection-end-line="44" selection-end-column="39" />
+        <state relative-caret-position="555">
+          <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/src/main/scala/chisel3/util/Mux.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="31" column="37" selection-start-line="31" selection-start-column="23" selection-end-line="31" selection-end-column="37" />
+        <state relative-caret-position="420">
+          <caret line="29" column="18" selection-start-line="29" selection-start-column="7" selection-end-line="29" selection-end-column="18" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/chisel3/chiselFrontend/src/main/scala/chisel3/core/SeqUtils.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="615">
+          <caret line="44" column="17" selection-start-line="44" selection-start-column="6" selection-end-line="44" selection-end-column="17" />
           <folding>
             <element signature="e#59#97#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala">
+    <entry file="file://$PROJECT_DIR$/chisel3/coreMacros/src/main/scala/chisel3/internal/sourceinfo/SourceInfoTransform.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+        <state relative-caret-position="1200">
+          <caret line="85" column="3" selection-start-line="85" selection-start-column="3" selection-end-line="85" selection-end-column="3" />
           <folding>
-            <element signature="e#81#96#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#182#223#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scie/SCIE.scala">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/TLB.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/NBDcache.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Instructions.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-6160">
+          <caret line="302" column="25" selection-start-line="302" selection-start-column="14" selection-end-line="302" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/SimpleHellaCacheIF.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1165">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RVC.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1285">
+          <caret line="14" column="6" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/package.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/AMOALU.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-135">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Breakpoint.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-385" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ICache.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/PTW.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3105">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/BTB.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1665">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Consts.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="50" column="6" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="681">
-          <caret line="505" column="35" lean-forward="true" selection-start-line="505" selection-start-column="35" selection-end-line="505" selection-end-column="35" />
+        <state relative-caret-position="576">
+          <caret line="704" column="56" selection-start-line="704" selection-start-column="56" selection-end-line="704" selection-end-column="56" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="945">
+          <caret line="67" column="55" selection-start-line="67" selection-start-column="46" selection-end-line="67" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="232" column="128" lean-forward="true" selection-start-line="232" selection-start-column="51" selection-end-line="232" selection-end-column="128" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="63" column="15" selection-start-line="63" selection-start-column="6" selection-end-line="63" selection-end-column="15" />
+          <folding>
+            <element signature="e#81#96#0" expanded="true" />
           </folding>
         </state>
       </provider>

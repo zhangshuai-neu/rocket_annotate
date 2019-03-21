@@ -24,8 +24,8 @@ class IntCtrlSigs extends Bundle {
   val branch = Bool()
   val jal = Bool()
   val jalr = Bool()
-  val rxs2 = Bool()
-  val rxs1 = Bool()
+  val rxs2 = Bool() //rs2是否有效
+  val rxs1 = Bool() //rs1是否有效
   val scie = Bool()
   val sel_alu2 = Bits(width = A2_X.getWidth)
   val sel_alu1 = Bits(width = A1_X.getWidth)

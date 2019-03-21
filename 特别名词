@@ -1,0 +1,4 @@
+SCIE: SiFive Custom Instruction Extension
+BPU: breakpoint unit
+RoCC: Rocket Custom Coprocessor Interface
+RVC:代表的是RISC-V 压缩指令，即16bit指令

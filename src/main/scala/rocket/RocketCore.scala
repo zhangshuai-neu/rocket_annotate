@@ -232,7 +232,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val wb_reg_rs2 = Reg(Bits())
   val take_pc_wb = Wire(Bool())
 
-  val take_pc_mem_wb = take_pc_wb || take_pc_mem
+  val take_pc_mem_wb = take_pc_wb || take_pc_mem  //在WB和MEM阶段发生了分支跳转
   val take_pc = take_pc_mem_wb
 
   // decode stage
@@ -241,11 +241,11 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   //_.bits指的是Decoupled中的参数类型，在这里指的是Instruction实例化出来的对象
   //即_.bits是个Instruction对象，而_.bits.inst是Instruction中的成员
   val ibuf = Module(new IBuf)
-  val id_expanded_inst = ibuf.io.inst.map(_.bits.inst)  //指令的结构,包括了rs3,rs2,rs1,rd,对应的是RVC.scala中的ExpandedInstruction
-  val id_raw_inst = ibuf.io.inst.map(_.bits.raw)        //指令
-  val id_inst = id_expanded_inst.map(_.bits)
+  val id_expanded_inst = ibuf.io.inst.map(_.bits.inst)  //Instruction对象的inst成员,指令的结构,包括了rs3,rs2,rs1,rd,对应的是RVC.scala中的ExpandedInstruction
+  val id_raw_inst = ibuf.io.inst.map(_.bits.raw)        //Instruction对象的raw成员
+  val id_inst = id_expanded_inst.map(_.bits)            //Instruction对象
   ibuf.io.imem <> io.imem.resp  //io.imem.resp中的io指的是Core.scala中借口HasCoreIO的io;其中imem是FrontendResp类型的，详见Frontend.scala
-  ibuf.io.kill := take_pc
+  ibuf.io.kill := take_pc //PC是否改变,即是否发生了分支跳转
 
   require(decodeWidth == 1 /* TODO */ && retireWidth == decodeWidth)
   //IntCtrlSigs的定义位于IDecode.scala中,根据decode_table完成对第一条指令的分析操作,详见decode方法
@@ -261,7 +261,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val id_raddr = IndexedSeq(id_raddr1, id_raddr2)
   val rf = new RegFile(31, xLen)  //寄存器堆
   val id_rs = id_raddr.map(rf.read _) //将rs1和rs2寄存器中的内容读出来
-  val ctrl_killd = Wire(Bool())
+  val ctrl_killd = Wire(Bool()) //发生分支跳转,中断,stall
   val id_npc = (ibuf.io.pc.asSInt + ImmGen(IMM_UJ, id_inst(0))).asUInt  //下条指令的PC
 
   //CSR相关模块
@@ -273,6 +273,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val id_sfence = id_ctrl.mem && id_ctrl.mem_cmd === M_SFENCE
   val id_csr_flush = id_sfence || id_system_insn || (id_csr_en && !id_csr_ren && csr.io.decode(0).write_flush)
 
+  //SiFive 定制指令
   val scie_decoder = rocketParams.useSCIE.option {
     val d = Module(new SCIEDecoder)
     assert(!d.io.pipelined && !d.io.multicycle)
@@ -468,7 +469,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
                              ex_ctrl.div && !div.io.req.ready
   val replay_ex_load_use = wb_dcache_miss && ex_reg_load_use
   val replay_ex = ex_reg_replay || (ex_reg_valid && (replay_ex_structural || replay_ex_load_use))
-  val ctrl_killx = take_pc_mem_wb || replay_ex || !ex_reg_valid
+  val ctrl_killx = take_pc_mem_wb || replay_ex || !ex_reg_valid //在MEM和EB阶段发生的分支跳转
   // detect 2-cycle load-use delay for LB/LH/SC
   val ex_slow_bypass = ex_ctrl.mem_cmd === M_XSC || Vec(MT_B, MT_BU, MT_H, MT_HU).contains(ex_ctrl.mem_type)
   val ex_sfence = Bool(usingVM) && ex_ctrl.mem && ex_ctrl.mem_cmd === M_SFENCE
@@ -483,7 +484,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val mem_pc_valid = mem_reg_valid || mem_reg_replay || mem_reg_xcpt_interrupt
   val mem_br_target = mem_reg_pc.asSInt +
     Mux(mem_ctrl.branch && mem_br_taken, ImmGen(IMM_SB, mem_reg_inst),
-    Mux(mem_ctrl.jal, ImmGen(IMM_UJ, mem_reg_inst),
+    Mux(mem_ctrl.jal, ImmGen(IMM_UJ, mem_reg_inst), //不带返回寄存器的跳转
     Mux(mem_reg_rvc, SInt(2), SInt(4))))
   val mem_npc = (Mux(mem_ctrl.jalr || mem_reg_sfence, encodeVirtualAddress(mem_reg_wdata, mem_reg_wdata).asSInt, mem_br_target) & SInt(-2)).asUInt
   val mem_wrong_npc =
@@ -691,7 +692,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
 
   // stall for RAW/WAW hazards on CSRs, loads, AMOs, and mul/div in execute stage.
   val ex_cannot_bypass = ex_ctrl.csr =/= CSR.N || ex_ctrl.jalr || ex_ctrl.mem || ex_ctrl.mul || ex_ctrl.div || ex_ctrl.fp || ex_ctrl.rocc
-  val data_hazard_ex = ex_ctrl.wxd && checkHazards(hazard_targets, _ === ex_waddr)
+  val data_hazard_ex = ex_ctrl.wxd && checkHazards(hazard_targets, _ === ex_waddr)  //EX阶段发生了data hazard
   val fp_data_hazard_ex = ex_ctrl.wfd && checkHazards(fp_hazard_targets, _ === ex_waddr)
   val id_ex_hazard = ex_reg_valid && (data_hazard_ex && ex_cannot_bypass || fp_data_hazard_ex)
 
@@ -700,13 +701,13 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
     if (fastLoadWord) Bool(!fastLoadByte) && mem_reg_slow_bypass
     else Bool(true)
   val mem_cannot_bypass = mem_ctrl.csr =/= CSR.N || mem_ctrl.mem && mem_mem_cmd_bh || mem_ctrl.mul || mem_ctrl.div || mem_ctrl.fp || mem_ctrl.rocc
-  val data_hazard_mem = mem_ctrl.wxd && checkHazards(hazard_targets, _ === mem_waddr)
+  val data_hazard_mem = mem_ctrl.wxd && checkHazards(hazard_targets, _ === mem_waddr) //MEM阶段发生了data hazard
   val fp_data_hazard_mem = mem_ctrl.wfd && checkHazards(fp_hazard_targets, _ === mem_waddr)
   val id_mem_hazard = mem_reg_valid && (data_hazard_mem && mem_cannot_bypass || fp_data_hazard_mem)
   id_load_use := mem_reg_valid && data_hazard_mem && mem_ctrl.mem
 
   // stall for RAW/WAW hazards on load/AMO misses and mul/div in writeback.
-  val data_hazard_wb = wb_ctrl.wxd && checkHazards(hazard_targets, _ === wb_waddr)
+  val data_hazard_wb = wb_ctrl.wxd && checkHazards(hazard_targets, _ === wb_waddr)  //WB阶段发生了data hazard
   val fp_data_hazard_wb = wb_ctrl.wfd && checkHazards(fp_hazard_targets, _ === wb_waddr)
   val id_wb_hazard = wb_reg_valid && (data_hazard_wb && wb_set_sboard || fp_data_hazard_wb)
 

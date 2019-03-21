@@ -21,7 +21,7 @@ class Instruction(implicit val p: Parameters) extends ParameterizedBundle with H
 class IBuf(implicit p: Parameters) extends CoreModule {
   val io = new Bundle {
     val imem = Decoupled(new FrontendResp).flip
-    val kill = Bool(INPUT)
+    val kill = Bool(INPUT)  //用来判断是否发生了分支跳转,如果发生了分支跳转，当前指令就没用了，不用被执行
     val pc = UInt(OUTPUT, vaddrBitsExtended)
     val btb_resp = new BTBResp().asOutput
     val inst = Vec(retireWidth, Decoupled(new Instruction)) //指令槽里面最多有几条指令,这里默认的是1. Instruction详见Instructions.scala
