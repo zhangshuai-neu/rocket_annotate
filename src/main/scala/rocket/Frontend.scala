@@ -21,10 +21,10 @@ class FrontendReq(implicit p: Parameters) extends CoreBundle()(p) {
 }
 
 class FrontendExceptions extends Bundle {
-  val pf = new Bundle {
+  val pf = new Bundle { //page fault on instruction
     val inst = Bool()
   }
-  val ae = new Bundle {
+  val ae = new Bundle { //access exception on instruction
     val inst = Bool()
   }
 }

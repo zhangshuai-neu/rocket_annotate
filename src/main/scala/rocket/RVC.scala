@@ -8,6 +8,9 @@ import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.tile._
 import freechips.rocketchip.util._
 
+//RVC代表的是压缩指令集
+
+//RVC解码后的格式
 class ExpandedInstruction extends Bundle {
   val bits = UInt(width = 32)
   val rd = UInt(width = 5)
@@ -152,11 +155,12 @@ class RVCDecoder(x: UInt, xLen: Int) {
   }
 }
 
+//RVC 解码单元
 class RVCExpander(implicit val p: Parameters) extends Module with HasCoreParameters {
   val io = new Bundle {
-    val in = UInt(INPUT, 32)
-    val out = new ExpandedInstruction
-    val rvc = Bool(OUTPUT)
+    val in = UInt(INPUT, 32)          //raw instructions
+    val out = new ExpandedInstruction //解码后的指令
+    val rvc = Bool(OUTPUT)  //指令是否是压缩的
   }
 
   if (usingCompressed) {

@@ -240,11 +240,11 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   //其中对ibuf的io的访问要注意，这里inst是个vec，同时其对象是Instruction类
   //_.bits指的是Decoupled中的参数类型，在这里指的是Instruction实例化出来的对象
   //即_.bits是个Instruction对象，而_.bits.inst是Instruction中的成员
-  val ibuf = Module(new IBuf)
+  val ibuf = Module(new IBuf) //IBuf对应的是instruction fetch unit取出的指令
   val id_expanded_inst = ibuf.io.inst.map(_.bits.inst)  //Instruction对象的inst成员,指令的结构,包括了rs3,rs2,rs1,rd,对应的是RVC.scala中的ExpandedInstruction
   val id_raw_inst = ibuf.io.inst.map(_.bits.raw)        //Instruction对象的raw成员
   val id_inst = id_expanded_inst.map(_.bits)            //Instruction对象
-  ibuf.io.imem <> io.imem.resp  //io.imem.resp中的io指的是Core.scala中借口HasCoreIO的io;其中imem是FrontendResp类型的，详见Frontend.scala
+  ibuf.io.imem <> io.imem.resp  //io.imem.resp中的io指的是Core.scala中借口HasCoreIO的io;其中imem是FrontendIO类型的，详见Frontend.scala
   ibuf.io.kill := take_pc //PC是否改变,即是否发生了分支跳转
 
   require(decodeWidth == 1 /* TODO */ && retireWidth == decodeWidth)
@@ -358,7 +358,7 @@ class Rocket(tile: RocketTile)(implicit p: Parameters) extends CoreModule()(p)
   val ex_rs = for (i <- 0 until id_raddr.size)  //判断是否存在bypass,如果存在则将发送到ID stage的数据存放到该变量中
     yield Mux(ex_reg_rs_bypass(i), bypass_mux(ex_reg_rs_lsb(i)), Cat(ex_reg_rs_msb(i), ex_reg_rs_lsb(i)))
   val ex_imm = ImmGen(ex_ctrl.sel_imm, ex_reg_inst)
-  //MuxLookup用来从Seq中查找某个关键字是否存在,关键字即为第一个参数
+  //MuxLookup用来从Seq中查找某个关键字是否存在,关键字即为第一个参数;第二个参数是default value，在找不到的情况下返回；第三个参数是寻找key的集合
   //ex_op1和ex_op2为当前要执行指令的两个source register,可能用来进行算数逻辑运算,也可能用来计算PC地址(跳转或比较指令)
   val ex_op1 = MuxLookup(ex_ctrl.sel_alu1, SInt(0), Seq(
     A1_RS1 -> ex_rs(0).asSInt,

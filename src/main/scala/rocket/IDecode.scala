@@ -62,7 +62,7 @@ class IntCtrlSigs extends Bundle {
                 List(N,X,X,X,X,X,X,X,X,A2_X,   A1_X,   IMM_X, DW_X,  FN_X,     N,M_X,        MT_X, X,X,X,X,X,X,X,CSR.X,X,X,X,X)
 
   def decode(inst: UInt, table: Iterable[(BitPat, List[BitPat])]) = {
-    val decoder = DecodeLogic(inst, default, table) //decoder是个Seq[UInt]类型的数据
+    val decoder = DecodeLogic(inst, default, table) //decoder是个Seq[UInt]类型的数据,同时这里的译码逻辑与常见的不太一样
     val sigs = Seq(legal, fp, rocc, branch, jal, jalr, rxs2, rxs1, scie, sel_alu2,
                    sel_alu1, sel_imm, alu_dw, alu_fn, mem, mem_cmd, mem_type,
                    rfs1, rfs2, rfs3, wfd, mul, div, wxd, csr, fence_i, fence, amo, dp)

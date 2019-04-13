@@ -8,22 +8,23 @@ import freechips.rocketchip.config.Parameters
 import freechips.rocketchip.tile._
 import freechips.rocketchip.util._
 
+//来自指令预取单元(Instruction Fetch Unit)的指令
 class Instruction(implicit val p: Parameters) extends ParameterizedBundle with HasCoreParameters {
   val xcpt0 = new FrontendExceptions // exceptions on first half of instruction
   val xcpt1 = new FrontendExceptions // exceptions on second half of instruction
-  val replay = Bool()
-  val rvc = Bool()
-  val inst = new ExpandedInstruction  //详见RVC.scala
-  val raw = UInt(width = 32)
+  val replay = Bool() //由于instruction cache 需要replay
+  val rvc = Bool()  //RVC 指令
+  val inst = new ExpandedInstruction  //详见RVC.scala，扩展指令
+  val raw = UInt(width = 32)  //raw instruction
   require(coreInstBits == (if (usingCompressed) 16 else 32))
 }
 
 class IBuf(implicit p: Parameters) extends CoreModule {
   val io = new Bundle {
-    val imem = Decoupled(new FrontendResp).flip
-    val kill = Bool(INPUT)  //用来判断是否发生了分支跳转,如果发生了分支跳转，当前指令就没用了，不用被执行
-    val pc = UInt(OUTPUT, vaddrBitsExtended)
-    val btb_resp = new BTBResp().asOutput
+    val imem = Decoupled(new FrontendResp).flip //从instruction cache中取出的指令
+    val kill = Bool(INPUT)  //用来判断是否发生了分支跳转,如果发生了分支跳转，当前指令就没用了，不用被执行；即杀死当前指令
+    val pc = UInt(OUTPUT, vaddrBitsExtended)  //IF阶段的PC
+    val btb_resp = new BTBResp().asOutput   //更新 BTB for RAS(return-address stack)
     val inst = Vec(retireWidth, Decoupled(new Instruction)) //指令槽里面最多有几条指令,这里默认的是1. Instruction详见Instructions.scala
   }
 
