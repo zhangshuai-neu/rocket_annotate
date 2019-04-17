@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d7550e4e-64dd-4f32-aea5-d8a054d18f0c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules/rocket_annotate_1905.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/rocket_annotate_1905.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sbt.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sbt.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/Frontend.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/Frontend.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/IBuf.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/RVC.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/RVC.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/特别名词" beforeDir="false" afterPath="$PROJECT_DIR$/特别名词" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/system/ExampleRocketSystem.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/system/ExampleRocketSystem.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/system/TestHarness.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/system/TestHarness.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/project/project/target/" />
@@ -46,12 +39,39 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-575">
-              <caret line="418" column="35" lean-forward="true" selection-start-line="418" selection-start-column="35" selection-end-line="418" selection-end-column="35" />
+            <state relative-caret-position="15">
+              <caret line="418" column="35" selection-start-line="418" selection-start-column="35" selection-end-line="418" selection-end-column="35" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#221#236#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/system/ExampleRocketSystem.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="645">
+              <caret line="49" column="135" selection-start-line="49" selection-start-column="135" selection-end-line="49" selection-end-column="135" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/config/Config.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/subsystem/RocketSubsystem.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="3" selection-start-line="6" selection-end-line="6" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -89,7 +109,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
+            <state relative-caret-position="795">
               <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
             </state>
           </provider>
@@ -127,8 +147,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>MDecode</find>
-      <find>decode_table</find>
       <find>Instruction</find>
       <find>id_expanded_inst</find>
       <find>FN_ADD</find>
@@ -157,6 +175,8 @@
       <find>checkHazards</find>
       <find>FrontendExceptions</find>
       <find>io</find>
+      <find>connect</find>
+      <find>imp</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/main/scala/amba</dir>
@@ -179,6 +199,8 @@
         <option value="$PROJECT_DIR$/src/main/scala/rocket/RVC.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/rocket/ALU.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/system/TestHarness.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/system/ExampleRocketSystem.scala" />
       </list>
     </option>
   </component>
@@ -201,7 +223,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -219,6 +240,13 @@
               <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
@@ -243,33 +271,18 @@
               <item name="scala" type="462c0819:PsiDirectoryNode" />
               <item name="rocket" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="subsystem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rocket_annotate" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rocket_annotate" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="system" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555116038068" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1555168112230" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -366,16 +379,20 @@
       <workItem from="1554998429266" duration="1201000" />
       <workItem from="1555108602011" duration="6599000" />
       <workItem from="1555116140856" duration="2574000" />
+      <workItem from="1555166225404" duration="2328000" />
+      <workItem from="1555182159430" duration="1532000" />
+      <workItem from="1555185529110" duration="4464000" />
+      <workItem from="1555343012998" duration="19000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81492000" />
+    <option name="totallyTimeSpent" value="89835000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.3305694" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.34604755" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -389,7 +406,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.12643678" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.12643678" />
       <window_info anchor="bottom" id="sbt-shell-toolwindow" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
@@ -413,13 +430,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/system/Generator.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-602">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/TLBPermissions.scala">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -673,6 +683,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/system/Generator.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-569">
+          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/system/RocketTestSuite.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1485">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/system/TestHarness.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/subsystem/Ports.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="28" column="101" selection-start-line="28" selection-start-column="94" selection-end-line="28" selection-end-column="101" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="418" column="35" selection-start-line="418" selection-start-column="35" selection-end-line="418" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#221#236#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/system/ExampleRocketSystem.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="49" column="135" selection-start-line="49" selection-start-column="135" selection-end-line="49" selection-end-column="135" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/config/Config.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/subsystem/RocketSubsystem.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="3" selection-start-line="6" selection-end-line="6" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/Frontend.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -697,6 +769,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/IDecode.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -711,31 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1350">
           <caret line="91" column="34" selection-start-line="91" selection-start-column="34" selection-end-line="91" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/ALU.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/config/Config.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60">
-          <caret line="32" column="36" lean-forward="true" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/rocket/RocketCore.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-575">
-          <caret line="418" column="35" lean-forward="true" selection-start-line="418" selection-start-column="35" selection-end-line="418" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#221#236#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
